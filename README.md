@@ -58,11 +58,46 @@ python manage.py runserver
 python manage.py test
 ```
 
+## Running the Application
+
+After following the setup instructions:
+
+1. **Run the development server:**
+   ```bash
+   python manage.py runserver
+   ```
+
+2. **Access the application:**
+   - Web interface: http://localhost:8000
+   - Admin interface: http://localhost:8000/admin (login: admin/admin)
+
+3. **Import more D0010 files:**
+   ```bash
+   python manage.py import_d0010 path/to/your/file.txt
+   ```
+
+## Project Structure
+
+```
+kraken-challenge/
+├── flowfile_importer/      # Django project settings
+├── meter_readings/         # Main app
+│   ├── models.py          # Data models
+│   ├── views.py           # Web views
+│   ├── admin.py           # Admin configuration
+│   ├── tests.py           # Test suite
+│   └── management/        # CLI commands
+│       └── commands/
+│           └── import_d0010.py
+├── sample_d0010.txt       # Sample data file
+└── requirements.txt       # Python dependencies
+```
+
 ## TODO / Not Completed
 
-- [ ] More comprehensive error handling
-- [ ] Validation of all D0010 fields
-- [ ] Bulk import optimization
-- [ ] Better UI styling (using basic Bootstrap for now)
-- [ ] API endpoint for file uploads
-- [ ] More test coverage 
+- [ ] More comprehensive error handling for malformed files
+- [ ] Full validation of all D0010 spec fields
+- [ ] Bulk import optimization for large files
+- [ ] REST API for file uploads
+- [ ] Production deployment configuration
+- [ ] More edge case test coverage 
