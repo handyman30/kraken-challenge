@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Our app for handling meter readings
+    'meter_readings',
 ]
 
 MIDDLEWARE = [
