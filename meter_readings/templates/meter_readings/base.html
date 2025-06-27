@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Meter Readings{% endblock %}</title>
+    <!-- Bootstrap CSS for quick styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'search_readings' %}">Kraken Meter Readings</a>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+    <footer class="mt-5 py-3 bg-light">
+        <div class="container text-center text-muted">
+            <small>D0010 Flow File Importer - Technical Challenge</small>
+        </div>
+    </footer>
+</body>
+</html> 

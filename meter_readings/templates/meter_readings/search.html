@@ -1,0 +1,89 @@
+{% extends 'meter_readings/base.html' %}
+
+{% block title %}Search Meter Readings{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8 mx-auto">
+        <h1 class="mb-4">Search Meter Readings</h1>
+        
+        <!-- Search form -->
+        <form method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" 
+                       name="q" 
+                       class="form-control form-control-lg" 
+                       placeholder="Enter MPAN or Meter Serial Number..." 
+                       value="{{ query }}"
+                       autofocus>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+            <small class="form-text text-muted mt-2">
+                Examples: 2200000000003 or 88Z0000000000001
+            </small>
+        </form>
+        
+        <!-- Results section -->
+        {% if search_performed %}
+            {% if readings %}
+                <h3 class="mb-3">Found {{ result_count }} reading{{ result_count|pluralize }}</h3>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>MPAN</th>
+                                <th>Meter Serial</th>
+                                <th>Value (kWh)</th>
+                                <th>Register</th>
+                                <th>Source File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reading in readings %}
+                            <tr>
+                                <td>{{ reading.reading_date|date:"Y-m-d" }}</td>
+                                <td>{{ reading.meter.meter_point.mpan }}</td>
+                                <td>{{ reading.meter.serial_number }}</td>
+                                <td class="text-end">{{ reading.value|floatformat:2 }}</td>
+                                <td>
+                                    {% if reading.register_type == 'E' %}
+                                        <span class="badge bg-info">Day</span>
+                                    {% elif reading.register_type == 'N' %}
+                                        <span class="badge bg-secondary">Night</span>
+                                    {% else %}
+                                        <span class="badge bg-primary">Standard</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <small class="text-muted">{{ reading.flow_file.filename }}</small>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    <h4 class="alert-heading">No results found</h4>
+                    <p>No readings found for "{{ query }}"</p>
+                    <hr>
+                    <p class="mb-0">Try searching with a different MPAN or meter serial number.</p>
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- Initial state - no search performed -->
+            <div class="alert alert-light">
+                <h4 class="alert-heading">Welcome!</h4>
+                <p>Search for meter readings by entering either:</p>
+                <ul>
+                    <li>An MPAN (Meter Point Administration Number)</li>
+                    <li>A meter serial number</li>
+                </ul>
+                <p class="mb-0">The search will show all readings associated with the meter.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
